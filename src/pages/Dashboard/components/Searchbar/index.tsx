@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import Button from "@/components/atoms/Button";
 import { IconButton } from "@/components/atoms/IconButton";
-import TextField from "@/components/TextField";
+import TextField from "@/components/molecules/TextField";
 import routes from "@/router/routes";
 import * as S from "./styles";
 
