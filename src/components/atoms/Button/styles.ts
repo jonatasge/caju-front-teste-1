@@ -1,22 +1,18 @@
 import styled, { css } from "styled-components";
 
-export const Button = styled.button<{
-  $bgColor?: string;
-  $color?: string;
-  $size?: "default" | "small";
-}>`
+export const Button = styled.button.withConfig({
+  shouldForwardProp: (prop) => !["size"].includes(prop),
+})<{ size?: "default" | "small" }>`
   align-items: center;
   border: none;
   cursor: pointer;
   display: flex;
 
   ${(props) =>
-    props.$size === "default"
+    props.size === "default"
       ? css`
-          background-color: ${props.$bgColor ?? "#64a98c"};
           border-radius: 36px;
           box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-          color: ${props.$color ?? "#fff"};
           font-size: 1rem;
           font-weight: 600;
           height: 56px;
@@ -25,11 +21,9 @@ export const Button = styled.button<{
       : ""}
 
   ${(props) =>
-    props.$size === "small"
+    props.size === "small"
       ? css`
-          background-color: ${props.$bgColor ?? "none"};
           border-radius: 4px;
-          color: ${props.$color ?? "#000"};
           font-size: 0.75rem;
           font-weight: normal;
           padding: 8px 16px;
