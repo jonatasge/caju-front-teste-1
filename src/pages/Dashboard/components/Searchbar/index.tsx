@@ -2,7 +2,6 @@ import { HiRefresh } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 
 import Button from "@/components/atoms/Button";
-import { IconButton } from "@/components/atoms/IconButton";
 import TextField from "@/components/molecules/TextField";
 import routes from "@/router/routes";
 import * as S from "./styles";
@@ -18,10 +17,16 @@ export const SearchBar = () => {
     <S.Container>
       <TextField placeholder="Digite um CPF válido" />
       <S.Actions>
-        <IconButton aria-label="refetch">
+        <S.IconButton aria-label="refetch">
           <HiRefresh />
-        </IconButton>
-        <Button onClick={() => goToNewAdmissionPage()}>Nova Admissão</Button>
+        </S.IconButton>
+
+        <Button
+          style={{ backgroundColor: "#64a98c", color: "#fff" }}
+          onClick={() => goToNewAdmissionPage()}
+        >
+          Nova Admissão
+        </Button>
       </S.Actions>
     </S.Container>
   );

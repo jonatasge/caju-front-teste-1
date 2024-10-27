@@ -4,14 +4,15 @@ export const IconButton = styled.button`
   align-items: center;
   background-color: transparent;
   border-radius: 24px;
-  border: 2px solid #64a98c;
+  border: 2px solid;
   cursor: pointer;
   display: flex;
   justify-content: center;
+  font-size: 1rem;
   padding: 4px;
   width: fit-content;
 
-  svg {
-    color: #64a98c;
+  * {
+    color: content;
   }
 `;
