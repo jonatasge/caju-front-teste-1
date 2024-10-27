@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-import IconButtonComponent from "@/components/atoms/IconButton";
+import Button from "@/components/atoms/Button";
+import IconButton from "@/components/atoms/IconButton";
 
 export const Container = styled.div`
   align-items: center;
@@ -16,6 +17,11 @@ export const Actions = styled.div`
   justify-content: flex-end;
 `;
 
-export const IconButton = styled(IconButtonComponent)`
+export const RefreshButton = styled(IconButton)`
   color: #64a98c;
+`;
+
+export const AddButton = styled(Button)`
+  background-color: #64a98c;
+  color: #fff;
 `;
