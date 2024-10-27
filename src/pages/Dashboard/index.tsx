@@ -1,50 +1,68 @@
-import { HiOutlineTrash } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
-import IconButton from "@/components/atoms/IconButton";
-import RegistrationCard from "@/components/molecules/RegistrationCard";
-import Columns from "@/components/organisms/Columns";
-import { SearchBar } from "./components/SearchBar";
-import * as S from "./styles";
-import { Action } from "./types";
+import DashboardTemplate from "@/components/templates/Dashboard";
+import { Action, Status } from "@/components/templates/Dashboard/types";
+import routes from "@/router/routes";
 
 const columns = [
-  { status: "REVIEW", title: "Pronto para revisar" },
-  { status: "APPROVED", title: "Aprovado" },
-  { status: "REPROVED", title: "Reprovado" },
+  {
+    actions: [Action.APPROVE],
+    status: Status.REVIEW,
+    title: "Pronto para revisar",
+  },
+  {
+    actions: [Action.REVIEW_AGAIN],
+    status: Status.APPROVED,
+    title: "Aprovado",
+  },
+  { actions: [Action.REMOVE], status: Status.REPROVED, title: "Reprovado" },
 ];
 
 const DashboardPage = () => {
+  const navigate = useNavigate();
+
+  function goToNewAdmissionPage() {
+    navigate(routes.newUser.path);
+  }
+
+  function generic(...e) {
+    console.log("> Generic function called ", e);
+  }
+
   return (
-    <S.Container>
-      <SearchBar />
-
-      <Columns.Root>
-        {columns.map((column) => (
-          <S.Column key={column.status} $status={column.status}>
-            <Columns.ColumnTitle>{column.title}</Columns.ColumnTitle>
-            <Columns.ColumnContent>
-              <RegistrationCard data={{}}>
-                <S.ActionButton size="small" $action={Action.REPROVE}>
-                  Reprovar
-                </S.ActionButton>
-
-                <S.ActionButton size="small" $action={Action.APPROVE}>
-                  Aprovar
-                </S.ActionButton>
-
-                <S.ActionButton size="small" $action={Action.REVIEW_AGAIN}>
-                  Revisar novamente
-                </S.ActionButton>
-
-                <IconButton>
-                  <HiOutlineTrash />
-                </IconButton>
-              </RegistrationCard>
-            </Columns.ColumnContent>
-          </S.Column>
-        ))}
-      </Columns.Root>
-    </S.Container>
+    <DashboardTemplate
+      columns={columns}
+      items={[
+        {
+          data: {
+            admissionDate: "2024-01-01T00:00:00",
+            email: "joao@email.com",
+            employeeName: "João Bosco",
+          },
+          status: Status.REVIEW,
+        },
+        {
+          data: {
+            admissionDate: "2024-02-01T00:00:00",
+            email: "maria@email.com",
+            employeeName: "Maria Conceição",
+          },
+          status: Status.APPROVED,
+        },
+        {
+          data: {
+            admissionDate: "2024-03-01T00:00:00",
+            email: "pedro@email.com",
+            employeeName: "Pedro Silva",
+          },
+          status: Status.REPROVED,
+        },
+      ]}
+      onAddButtonClick={goToNewAdmissionPage}
+      onRefresh={generic}
+      onStatusChange={generic}
+    />
   );
 };
+
 export default DashboardPage;
