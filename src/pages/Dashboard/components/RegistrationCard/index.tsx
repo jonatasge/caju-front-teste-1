@@ -1,11 +1,12 @@
-import { ButtonSmall } from "@/components/Buttons";
-import * as S from "./styles";
 import {
-  HiOutlineMail,
-  HiOutlineUser,
   HiOutlineCalendar,
+  HiOutlineMail,
   HiOutlineTrash,
+  HiOutlineUser,
 } from "react-icons/hi";
+
+import Button from "@/components/atoms/Button";
+import * as S from "./styles";
 
 type Props = {
   data: any;
@@ -18,18 +19,27 @@ const RegistrationCard = (props: Props) => {
         <HiOutlineUser />
         <h3>{props.data.employeeName}</h3>
       </S.IconAndText>
+
       <S.IconAndText>
         <HiOutlineMail />
         <p>{props.data.email}</p>
       </S.IconAndText>
+
       <S.IconAndText>
         <HiOutlineCalendar />
         <span>{props.data.admissionDate}</span>
       </S.IconAndText>
+      
       <S.Actions>
-        <ButtonSmall bgcolor="rgb(255, 145, 154)" >Reprovar</ButtonSmall>
-        <ButtonSmall bgcolor="rgb(155, 229, 155)">Aprovar</ButtonSmall>
-        <ButtonSmall bgcolor="#ff8858">Revisar novamente</ButtonSmall>
+        <Button size="small" bgColor="rgb(255, 145, 154)">
+          Reprovar
+        </Button>
+        <Button size="small" bgColor="rgb(155, 229, 155)">
+          Aprovar
+        </Button>
+        <Button size="small" bgColor="#ff8858">
+          Revisar novamente
+        </Button>
 
         <HiOutlineTrash />
       </S.Actions>
