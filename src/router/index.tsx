@@ -1,26 +1,16 @@
-import { HashRouter, Redirect, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 
-import routes from "./routes";
+import routes from "./routes.tsx";
 
 const Router = () => {
   return (
     <div style={{ marginTop: 64 }}>
       <HashRouter>
-        <Switch>
-          {Object.values(routes)
-            .filter((r) => !r.redirectTo)
-            .map((route) => (
-              <Route key={route.path} {...route} />
-            ))}
-
-          {Object.values(routes)
-            .filter((r) => r.redirectTo)
-            .map(({ redirectTo, ...route }) => (
-              <Route key={route.path} {...route}>
-                <Redirect to={redirectTo as string} />
-              </Route>
-            ))}
-        </Switch>
+        <Routes>
+          {Object.values(routes).map((route) => (
+            <Route key={route.path} {...route} />
+          ))}
+        </Routes>
       </HashRouter>
     </div>
   );
