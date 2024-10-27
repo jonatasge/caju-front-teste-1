@@ -3,9 +3,9 @@ import * as S from "./styles";
 
 type Props = React.ComponentProps<typeof S.Header>;
 
-const Header = ({ size = "default", ...props }: Props) => {
+const Header = (props: Props) => {
   return (
-    <S.Header {...props} size={size}>
+    <S.Header {...props}>
       <Title>{props.title}</Title>
     </S.Header>
   );

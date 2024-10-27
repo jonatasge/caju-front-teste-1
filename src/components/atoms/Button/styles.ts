@@ -16,7 +16,7 @@ export const Button = styled.button<{
           background-color: ${props.bgColor ?? "none"};
           border-radius: 4px;
           color: ${props.color ?? "#000"};
-          font-size: 12px;
+          font-size: 0.75rem;
           font-weight: normal;
           padding: 8px 16px;
         `
@@ -29,7 +29,7 @@ export const Button = styled.button<{
           border-radius: 36px;
           box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
           color: ${props.color ?? "#fff"};
-          font-size: 16px;
+          font-size: 1rem;
           font-weight: 600;
           height: 56px;
           padding: 8px 32px;

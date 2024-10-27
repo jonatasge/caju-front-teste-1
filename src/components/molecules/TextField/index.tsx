@@ -1,12 +1,10 @@
-import { InputHTMLAttributes } from "react";
-
 import ErrorMessage from "@/components/atoms/ErrorMessage";
 import Input from "@/components/atoms/Input";
 
 type Props = {
   label?: string;
   error?: string;
-} & InputHTMLAttributes<any>;
+} & React.InputHTMLAttributes<unknown>;
 
 const TextField = (props: Props) => {
   return (
