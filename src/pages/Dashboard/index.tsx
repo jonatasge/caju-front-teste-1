@@ -1,7 +1,11 @@
+import { HiOutlineTrash } from "react-icons/hi";
+
+import IconButton from "@/components/atoms/IconButton";
 import RegistrationCard from "@/components/molecules/RegistrationCard";
 import Columns from "@/components/organisms/Columns";
 import { SearchBar } from "./components/SearchBar";
 import * as S from "./styles";
+import { Action } from "./types";
 
 const columns = [
   { status: "REVIEW", title: "Pronto para revisar" },
@@ -19,13 +23,23 @@ const DashboardPage = () => {
           <S.Column key={column.status} $status={column.status}>
             <Columns.ColumnTitle>{column.title}</Columns.ColumnTitle>
             <Columns.ColumnContent>
-              <RegistrationCard
-                data={{
-                  admissionDate: "2022-10-15",
-                  email: "johndoe@example.com",
-                  employeeName: "John Doe",
-                }}
-              ></RegistrationCard>
+              <RegistrationCard data={{}}>
+                <S.ActionButton size="small" $action={Action.REPROVE}>
+                  Reprovar
+                </S.ActionButton>
+
+                <S.ActionButton size="small" $action={Action.APPROVE}>
+                  Aprovar
+                </S.ActionButton>
+
+                <S.ActionButton size="small" $action={Action.REVIEW_AGAIN}>
+                  Revisar novamente
+                </S.ActionButton>
+
+                <IconButton>
+                  <HiOutlineTrash />
+                </IconButton>
+              </RegistrationCard>
             </Columns.ColumnContent>
           </S.Column>
         ))}
