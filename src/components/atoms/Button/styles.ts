@@ -1,9 +1,9 @@
 import styled, { css } from "styled-components";
 
 export const Button = styled.button<{
-  bgColor?: string;
-  color?: string;
-  size?: "default" | "small";
+  $bgColor?: string;
+  $color?: string;
+  $size?: "default" | "small";
 }>`
   align-items: center;
   border: none;
@@ -11,28 +11,28 @@ export const Button = styled.button<{
   display: flex;
 
   ${(props) =>
-    props.size === "small"
+    props.$size === "default"
       ? css`
-          background-color: ${props.bgColor ?? "none"};
-          border-radius: 4px;
-          color: ${props.color ?? "#000"};
-          font-size: 0.75rem;
-          font-weight: normal;
-          padding: 8px 16px;
-        `
-      : ""}
-
-  ${(props) =>
-    props.size === "default"
-      ? css`
-          background-color: ${props.bgColor ?? "#64a98c"};
+          background-color: ${props.$bgColor ?? "#64a98c"};
           border-radius: 36px;
           box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-          color: ${props.color ?? "#fff"};
+          color: ${props.$color ?? "#fff"};
           font-size: 1rem;
           font-weight: 600;
           height: 56px;
           padding: 8px 32px;
+        `
+      : ""}
+
+  ${(props) =>
+    props.$size === "small"
+      ? css`
+          background-color: ${props.$bgColor ?? "none"};
+          border-radius: 4px;
+          color: ${props.$color ?? "#000"};
+          font-size: 0.75rem;
+          font-weight: normal;
+          padding: 8px 16px;
         `
       : ""}
 `;
