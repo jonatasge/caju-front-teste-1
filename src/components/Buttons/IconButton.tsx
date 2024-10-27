@@ -1,15 +1,16 @@
 import styled from "styled-components";
 
 export const _IconButtonStyled = styled.button`
-  cursor: pointer;
-  border: 2px solid #64a98c;
-  width: fit-content;
-  padding: 4px;
-  border-radius: 24px;
-  display: flex;
   align-items: center;
-  justify-content: center;
   background-color: transparent;
+  border-radius: 24px;
+  border: 2px solid #64a98c;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 4px;
+  width: fit-content;
+
   svg {
     color: #64a98c;
   }
