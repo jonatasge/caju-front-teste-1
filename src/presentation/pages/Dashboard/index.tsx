@@ -7,6 +7,7 @@ import useDebounce from "@/presentation/hooks/useDebounce";
 import DashboardTemplate from "@/presentation/templates/Dashboard";
 import { Action } from "@/presentation/templates/Dashboard/types";
 import routes from "@/router/routes";
+import { useStore } from "@/presentation/Store";
 
 const COLUMNS = [
   {
@@ -27,28 +28,34 @@ const COLUMNS = [
 ];
 
 const DashboardPage = () => {
+  const { store, setStore } = useStore();
   const navigate = useNavigate();
   const [data, setData] = useState<Registration[]>([]);
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
 
   async function onLoadData() {
+    setStore({ ...store, isLoading: true });
     try {
       const data = await registrations.get();
       setData(data);
     } catch (error) {
       alert(error);
     }
+    setStore({ ...store, isLoading: false });
   }
 
   async function onSearch(value: string) {
     if (!value) return onLoadData();
+
+    setStore({ ...store, isLoading: true });
     try {
       const data = await registrations.find("cpf", value);
       setData(data);
     } catch (error) {
       alert(error);
     }
+    setStore({ ...store, isLoading: false });
   }
 
   useEffect(() => {
