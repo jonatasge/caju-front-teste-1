@@ -1,13 +1,14 @@
 import styled, { css } from "styled-components";
 
 export const Button = styled.button.withConfig({
-  shouldForwardProp: (prop) => !["size"].includes(prop),
-})<{ size?: "default" | "small" }>`
+  shouldForwardProp: (prop) => !["size", "variant"].includes(prop),
+})<{ size?: "default" | "small"; variant?: "primary" | "none" }>`
   align-items: center;
   border: none;
   cursor: pointer;
   display: flex;
 
+  /* size */
   ${(props) =>
     props.size === "default"
       ? css`
@@ -27,6 +28,15 @@ export const Button = styled.button.withConfig({
           font-size: 0.75rem;
           font-weight: normal;
           padding: 8px 16px;
+        `
+      : ""}
+
+  /* variant */
+  ${(props) =>
+    props.variant === "primary"
+      ? css`
+          background-color: var(--primary);
+          color: var(--on-primary);
         `
       : ""}
 `;

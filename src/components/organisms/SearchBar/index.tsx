@@ -1,5 +1,7 @@
 import { HiRefresh } from "react-icons/hi";
 
+import Button from "@/components/atoms/Button";
+import IconButton from "@/components/atoms/IconButton";
 import TextField from "@/components/molecules/TextField";
 import * as S from "./styles";
 
@@ -14,11 +16,18 @@ const SearchBar = ({ onAdd, onRefresh, ...props }: Props) => {
       <TextField placeholder="Digite um CPF válido" />
 
       <S.Actions>
-        <S.RefreshButton aria-label="refetch" onClick={onRefresh}>
+        <IconButton
+          aria-label="refetch"
+          onClick={onRefresh}
+          size="small"
+          variant="primary"
+        >
           <HiRefresh />
-        </S.RefreshButton>
+        </IconButton>
 
-        <S.AddButton onClick={onAdd}>Nova Admissão</S.AddButton>
+        <Button variant="primary" onClick={onAdd}>
+          Nova Admissão
+        </Button>
       </S.Actions>
     </S.Container>
   );
