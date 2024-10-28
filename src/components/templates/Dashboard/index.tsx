@@ -74,6 +74,7 @@ const DashboardTemplate = ({
 
                     {column.actions.includes(Action.REMOVE) ? (
                       <IconButton
+                        size="small"
                         onClick={() =>
                           onStatusChange({ item, newStatus: Status.REMOVED })
                         }
