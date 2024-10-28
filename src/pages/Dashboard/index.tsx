@@ -22,10 +22,10 @@ const DashboardPage = () => {
   const navigate = useNavigate();
 
   function goToNewAdmissionPage() {
-    navigate(routes.newUser.path);
+    navigate(routes.newAdmission.path);
   }
 
-  function generic(...e) {
+  function generic(...e: any) {
     console.log("> Generic function called ", e);
   }
 

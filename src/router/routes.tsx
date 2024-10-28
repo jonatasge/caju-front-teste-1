@@ -2,7 +2,7 @@ import { Navigate, RouteProps } from "react-router-dom";
 
 import DashboardPage from "@/pages/Dashboard";
 import History from "@/pages/History";
-import NewUserPage from "@/pages/NewUser";
+import NewAdmissionPage from "@/pages/NewAdmission";
 
 type Route = Omit<RouteProps, "path"> & {
   path: string;
@@ -11,7 +11,7 @@ type Route = Omit<RouteProps, "path"> & {
 const routes: { [key: string]: Route } = {
   dashboard: { path: "/dashboard", element: <DashboardPage /> },
   history: { path: "/history", element: <History /> },
-  newUser: { path: "/new-user", element: <NewUserPage /> },
+  newAdmission: { path: "/new-admission", element: <NewAdmissionPage /> },
   "*": { path: "*", element: <Navigate to="/dashboard" /> },
 };
 
