@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { RegistrationStatus } from "@/domain/Registration";
+import { Registration, RegistrationStatus } from "@/domain/Registration";
 import DashboardTemplate from "@/presentation/templates/Dashboard";
 import { Action } from "@/presentation/templates/Dashboard/types";
 import routes from "@/router/routes";
+import { registrations } from "@/data/Registrations";
 
 const COLUMNS = [
   {
@@ -25,33 +26,17 @@ const COLUMNS = [
 ];
 
 const DashboardPage = () => {
-  const [items, setItems] = useState([
-    {
-      data: {
-        admissionDate: "2024-01-01T00:00:00",
-        email: "joao@email.com",
-        employeeName: "João Bosco",
-      },
-      status: RegistrationStatus.REVIEW,
-    },
-    {
-      data: {
-        admissionDate: "2024-02-01T00:00:00",
-        email: "maria@email.com",
-        employeeName: "Maria Conceição",
-      },
-      status: RegistrationStatus.APPROVED,
-    },
-    {
-      data: {
-        admissionDate: "2024-03-01T00:00:00",
-        email: "pedro@email.com",
-        employeeName: "Pedro Silva",
-      },
-      status: RegistrationStatus.REPROVED,
-    },
-  ]);
+  const [data, setData] = useState<Registration[]>([]);
   const navigate = useNavigate();
+
+  async function loadData() {
+    try {
+      const data = await registrations.get();
+      setData(data);
+    } catch (error) {
+      alert(error);
+    }
+  }
 
   function goToNewAdmissionPage() {
     navigate(routes.newAdmission.path);
@@ -61,10 +46,14 @@ const DashboardPage = () => {
     console.log("> Generic function called ", e);
   }
 
+  useEffect(() => {
+    loadData();
+  }, []);
+
   return (
     <DashboardTemplate
       columns={COLUMNS}
-      items={items}
+      data={data}
       onAddButtonClick={goToNewAdmissionPage}
       onRefresh={generic}
       onStatusChange={generic}

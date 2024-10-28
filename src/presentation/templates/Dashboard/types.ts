@@ -14,7 +14,4 @@ export type Column = {
   title: string;
 };
 
-export type Item = {
-  data: React.ComponentProps<typeof RegistrationCard>["data"];
-  status: RegistrationStatus;
-};
+export type Data = React.ComponentProps<typeof RegistrationCard>["data"];
