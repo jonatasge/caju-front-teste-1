@@ -45,6 +45,10 @@ const DashboardPage = () => {
     setStore({ ...store, isLoading: false });
   }
 
+  useEffect(() => {
+    onLoadData();
+  }, []);
+
   async function onSearch(value: string) {
     if (!value) return onLoadData();
 
@@ -62,13 +66,15 @@ const DashboardPage = () => {
     onSearch(debouncedSearch);
   }, [debouncedSearch]);
 
-  function generic(...e: any) {
-    console.log("> Generic function called ", e);
+  async function onStatusChange({
+    newStatus,
+    ...registration
+  }: Parameters<
+    React.ComponentProps<typeof DashboardTemplate>["onStatusChange"]
+  >[0]) {
+    await registrations.put(registration.id, { ...registration, status: newStatus });
+    onSearch(debouncedSearch);
   }
-
-  useEffect(() => {
-    onLoadData();
-  }, []);
 
   function goToNewAdmissionPage() {
     navigate(routes.newAdmission.path);
@@ -81,7 +87,7 @@ const DashboardPage = () => {
       onAddButtonClick={goToNewAdmissionPage}
       onRefresh={() => onSearch(debouncedSearch)}
       onSearch={setSearch}
-      onStatusChange={generic}
+      onStatusChange={onStatusChange}
     />
   );
 };

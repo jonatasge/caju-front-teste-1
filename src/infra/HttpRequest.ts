@@ -7,6 +7,8 @@ export class HttpRequest<T> {
     if (config.api) this.api = config.api;
     if (config.headers) this.headers = config.headers;
     this.path = config.path;
+
+    this.headers.append("Content-Type", "application/json");
   }
 
   get(id?: string) {
@@ -26,7 +28,7 @@ export class HttpRequest<T> {
     return fetch(`${this.api}${this.path}`, {
       headers: this.headers,
       method: "POST",
-      body: data as any,
+      body: JSON.stringify(data),
     }).then((r) => r.json());
   }
 
@@ -34,7 +36,7 @@ export class HttpRequest<T> {
     return fetch(`${this.api}${this.path}/${id}`, {
       headers: this.headers,
       method: "PUT",
-      body: data as any,
+      body: JSON.stringify(data),
     }).then((r) => r.json());
   }
 

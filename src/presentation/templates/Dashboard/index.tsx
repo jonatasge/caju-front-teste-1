@@ -50,7 +50,7 @@ const DashboardTemplate = ({
                         $action={Action.REPROVE}
                         onClick={() =>
                           onStatusChange({
-                            item,
+                            ...item,
                             newStatus: RegistrationStatus.REPROVED,
                           })
                         }
@@ -65,7 +65,7 @@ const DashboardTemplate = ({
                         $action={Action.APPROVE}
                         onClick={() =>
                           onStatusChange({
-                            item,
+                            ...item,
                             newStatus: RegistrationStatus.APPROVED,
                           })
                         }
@@ -80,7 +80,7 @@ const DashboardTemplate = ({
                         $action={Action.REVIEW_AGAIN}
                         onClick={() =>
                           onStatusChange({
-                            item,
+                            ...item,
                             newStatus: RegistrationStatus.REVIEW,
                           })
                         }
@@ -94,7 +94,7 @@ const DashboardTemplate = ({
                         size="small"
                         onClick={() =>
                           onStatusChange({
-                            item,
+                            ...item,
                             newStatus: RegistrationStatus.REMOVED,
                           })
                         }
