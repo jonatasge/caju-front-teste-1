@@ -1,7 +1,7 @@
 import { Navigate, RouteProps } from "react-router-dom";
 
-import DashboardPage from "@/pages/Dashboard";
-import NewAdmissionPage from "@/pages/NewAdmission";
+import DashboardPage from "@/presentation/pages/Dashboard";
+import NewAdmissionPage from "@/presentation/pages/NewAdmission";
 
 type Route = Omit<RouteProps, "path"> & {
   path: string;
