@@ -1,5 +1,6 @@
-import Text from "@/presentation/atoms/Text";
 import { useEffect, useState } from "react";
+
+import Text from "@/presentation/atoms/Text";
 import * as S from "./styles";
 
 type Props = React.ComponentProps<typeof S.Loading>;

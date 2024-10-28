@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 import { registrations } from "@/data/Registrations";
 import { Registration, RegistrationStatus } from "@/domain/Registration";
+import { useStore } from "@/presentation/Store";
+import Text from "@/presentation/atoms/Text";
 import useDebounce from "@/presentation/hooks/useDebounce";
+import Dialog from "@/presentation/organisms/Dialog";
 import DashboardTemplate from "@/presentation/templates/Dashboard";
 import { Action } from "@/presentation/templates/Dashboard/types";
 import routes from "@/router/routes";
-import { useStore } from "@/presentation/Store";
 
 const COLUMNS = [
   {
@@ -30,6 +32,9 @@ const COLUMNS = [
 const DashboardPage = () => {
   const { store, setStore } = useStore();
   const navigate = useNavigate();
+  const [dialog, setDialog] = useState<React.ComponentProps<typeof Dialog>>({
+    show: false,
+  });
   const [data, setData] = useState<Registration[]>([]);
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
@@ -72,8 +77,22 @@ const DashboardPage = () => {
   }: Parameters<
     React.ComponentProps<typeof DashboardTemplate>["onStatusChange"]
   >[0]) {
-    await registrations.put(registration.id, { ...registration, status: newStatus });
-    onSearch(debouncedSearch);
+    setDialog({
+      show: true,
+      onContinue: async () => {
+        setDialog({ show: false })
+        try {
+          await registrations.put(registration.id, {
+            ...registration,
+            status: newStatus,
+          });
+          onSearch(debouncedSearch);
+        } catch (error) {
+          alert(error);
+        }
+      },
+      onDismiss: () => setDialog({ show: false }),
+    });
   }
 
   function goToNewAdmissionPage() {
@@ -81,14 +100,20 @@ const DashboardPage = () => {
   }
 
   return (
-    <DashboardTemplate
-      columns={COLUMNS}
-      data={data}
-      onAddButtonClick={goToNewAdmissionPage}
-      onRefresh={() => onSearch(debouncedSearch)}
-      onSearch={setSearch}
-      onStatusChange={onStatusChange}
-    />
+    <>
+      <Dialog title="Confirmar ação" {...dialog}>
+        <Text>Tem certeza que deseja fazer isso?</Text>
+      </Dialog>
+
+      <DashboardTemplate
+        columns={COLUMNS}
+        data={data}
+        onAddButtonClick={goToNewAdmissionPage}
+        onRefresh={() => onSearch(debouncedSearch)}
+        onSearch={setSearch}
+        onStatusChange={onStatusChange}
+      />
+    </>
   );
 };
 
