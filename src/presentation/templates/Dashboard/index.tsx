@@ -13,6 +13,7 @@ type Props = {
   data: Data[];
   onStatusChange(data: Data & { newStatus: RegistrationStatus }): void;
   onAddButtonClick(): void;
+  onSearch(text: string): void;
   onRefresh(): void;
 };
 
@@ -21,12 +22,17 @@ const DashboardTemplate = ({
   data,
   onAddButtonClick,
   onRefresh,
+  onSearch,
   onStatusChange,
   ...props
 }: Props) => {
   return (
     <S.Container {...props}>
-      <SearchBar onAdd={onAddButtonClick} onRefresh={onRefresh} />
+      <SearchBar
+        onAdd={onAddButtonClick}
+        onRefresh={onRefresh}
+        onSearch={onSearch}
+      />
 
       <Columns.Root>
         {columns.map((column) => (
@@ -36,71 +42,68 @@ const DashboardTemplate = ({
             <Columns.ColumnContent>
               {data
                 .filter((item) => item.status === column.status)
-                .map((item) => {
-                  console.log(">", columns, data, item);
-                  return (
-                    <RegistrationCard key={item.id} data={item}>
-                      {column.actions.includes(Action.REPROVE) ? (
-                        <S.ActionButton
-                          size="small"
-                          $action={Action.REPROVE}
-                          onClick={() =>
-                            onStatusChange({
-                              item,
-                              newStatus: RegistrationStatus.REPROVED,
-                            })
-                          }
-                        >
-                          Reprovar
-                        </S.ActionButton>
-                      ) : null}
+                .map((item) => (
+                  <RegistrationCard key={item.id} data={item}>
+                    {column.actions.includes(Action.REPROVE) ? (
+                      <S.ActionButton
+                        size="small"
+                        $action={Action.REPROVE}
+                        onClick={() =>
+                          onStatusChange({
+                            item,
+                            newStatus: RegistrationStatus.REPROVED,
+                          })
+                        }
+                      >
+                        Reprovar
+                      </S.ActionButton>
+                    ) : null}
 
-                      {column.actions.includes(Action.APPROVE) ? (
-                        <S.ActionButton
-                          size="small"
-                          $action={Action.APPROVE}
-                          onClick={() =>
-                            onStatusChange({
-                              item,
-                              newStatus: RegistrationStatus.APPROVED,
-                            })
-                          }
-                        >
-                          Aprovar
-                        </S.ActionButton>
-                      ) : null}
+                    {column.actions.includes(Action.APPROVE) ? (
+                      <S.ActionButton
+                        size="small"
+                        $action={Action.APPROVE}
+                        onClick={() =>
+                          onStatusChange({
+                            item,
+                            newStatus: RegistrationStatus.APPROVED,
+                          })
+                        }
+                      >
+                        Aprovar
+                      </S.ActionButton>
+                    ) : null}
 
-                      {column.actions.includes(Action.REVIEW_AGAIN) ? (
-                        <S.ActionButton
-                          size="small"
-                          $action={Action.REVIEW_AGAIN}
-                          onClick={() =>
-                            onStatusChange({
-                              item,
-                              newStatus: RegistrationStatus.REVIEW,
-                            })
-                          }
-                        >
-                          Revisar novamente
-                        </S.ActionButton>
-                      ) : null}
+                    {column.actions.includes(Action.REVIEW_AGAIN) ? (
+                      <S.ActionButton
+                        size="small"
+                        $action={Action.REVIEW_AGAIN}
+                        onClick={() =>
+                          onStatusChange({
+                            item,
+                            newStatus: RegistrationStatus.REVIEW,
+                          })
+                        }
+                      >
+                        Revisar novamente
+                      </S.ActionButton>
+                    ) : null}
 
-                      {column.actions.includes(Action.REMOVE) ? (
-                        <IconButton
-                          size="small"
-                          onClick={() =>
-                            onStatusChange({
-                              item,
-                              newStatus: RegistrationStatus.REMOVED,
-                            })
-                          }
-                        >
-                          <HiOutlineTrash />
-                        </IconButton>
-                      ) : null}
-                    </RegistrationCard>
-                  );
-                })}
+                    {column.actions.includes(Action.REMOVE) ? (
+                      <IconButton
+                        size="small"
+                        onClick={() =>
+                          onStatusChange({
+                            item,
+                            newStatus: RegistrationStatus.REMOVED,
+                          })
+                        }
+                      >
+                        <HiOutlineTrash />
+                      </IconButton>
+                    ) : null}
+                  </RegistrationCard>
+                ))}
             </Columns.ColumnContent>
           </S.Column>
         ))}

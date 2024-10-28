@@ -10,8 +10,14 @@ export class HttpRequest<T> {
   }
 
   get(id?: string) {
-    const find = id ? `/${id}` : "";
-    return fetch(`${this.api}${this.path}${find}`, {
+    const _id = id ? `/${id}` : "";
+    return fetch(`${this.api}${this.path}${_id}`, {
+      headers: this.headers,
+    }).then((r) => r.json());
+  }
+
+  find(param: string, value: string) {
+    return fetch(`${this.api}${this.path}?${param}=${value}`, {
       headers: this.headers,
     }).then((r) => r.json());
   }

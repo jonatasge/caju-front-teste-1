@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { registrations } from "@/data/Registrations";
 import { Registration, RegistrationStatus } from "@/domain/Registration";
+import useDebounce from "@/presentation/hooks/useDebounce";
 import DashboardTemplate from "@/presentation/templates/Dashboard";
 import { Action } from "@/presentation/templates/Dashboard/types";
 import routes from "@/router/routes";
-import { registrations } from "@/data/Registrations";
 
 const COLUMNS = [
   {
@@ -26,10 +27,12 @@ const COLUMNS = [
 ];
 
 const DashboardPage = () => {
-  const [data, setData] = useState<Registration[]>([]);
   const navigate = useNavigate();
+  const [data, setData] = useState<Registration[]>([]);
+  const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 500);
 
-  async function loadData() {
+  async function onLoadData() {
     try {
       const data = await registrations.get();
       setData(data);
@@ -38,24 +41,39 @@ const DashboardPage = () => {
     }
   }
 
-  function goToNewAdmissionPage() {
-    navigate(routes.newAdmission.path);
+  async function onSearch(value: string) {
+    if (!value) return onLoadData();
+    try {
+      const data = await registrations.find("cpf", value);
+      setData(data);
+    } catch (error) {
+      alert(error);
+    }
   }
+
+  useEffect(() => {
+    onSearch(debouncedSearch);
+  }, [debouncedSearch]);
 
   function generic(...e: any) {
     console.log("> Generic function called ", e);
   }
 
   useEffect(() => {
-    loadData();
+    onLoadData();
   }, []);
+
+  function goToNewAdmissionPage() {
+    navigate(routes.newAdmission.path);
+  }
 
   return (
     <DashboardTemplate
       columns={COLUMNS}
       data={data}
       onAddButtonClick={goToNewAdmissionPage}
-      onRefresh={generic}
+      onRefresh={() => onSearch(debouncedSearch)}
+      onSearch={setSearch}
       onStatusChange={generic}
     />
   );
