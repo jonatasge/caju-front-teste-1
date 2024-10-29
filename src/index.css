@@ -2,7 +2,14 @@
 
 :root {
   --primary: #64a98c;
-  --on-primary: #ffffff;
+  --on-primary: #fff;
+
+  --toast-info: #ddeeff;
+  --on-toast-info: #000;
+  --toast-error: #d00;
+  --on-toast-error: #fff;
+  --toast-success: #64a98c;
+  --on-toast-success: #fff;
 }
 
 * {
