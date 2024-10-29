@@ -12,7 +12,7 @@ export const Loading = styled.div<{
   left: 0;
   position: fixed;
   top: 0;
-  transition: all linear 0.25s;
+  transition: all linear 0.1s;
   width: 100%;
   z-index: 99999;
 
