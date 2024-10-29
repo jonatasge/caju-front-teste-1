@@ -10,6 +10,7 @@ import Dialog from "@/presentation/organisms/Dialog";
 import DashboardTemplate from "@/presentation/templates/Dashboard";
 import { Action } from "@/presentation/templates/Dashboard/types";
 import routes from "@/router/routes";
+import Toast from "@/presentation/molecules/Toast";
 
 const COLUMNS = [
   {
@@ -35,6 +36,9 @@ const DashboardPage = () => {
   const [dialog, setDialog] = useState<React.ComponentProps<typeof Dialog>>({
     show: false,
   });
+  const [toast, setToast] = useState<React.ComponentProps<typeof Toast>>({
+    show: false,
+  });
   const [data, setData] = useState<Registration[]>([]);
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
@@ -45,7 +49,12 @@ const DashboardPage = () => {
       const data = await registrations.get();
       setData(data);
     } catch (error) {
-      alert(error);
+      setToast({
+        children: "Falha ao carregar os dados: " + error.message,
+        delay: 500,
+        show: true,
+        variant: "error",
+      });
     }
     setStore({ ...store, isLoading: false });
   }
@@ -62,7 +71,12 @@ const DashboardPage = () => {
       const data = await registrations.find("cpf", value);
       setData(data);
     } catch (error) {
-      alert(error);
+      setToast({
+        children: "Falha na busca: " + error.message,
+        delay: 500,
+        show: true,
+        variant: "error",
+      });
     }
     setStore({ ...store, isLoading: false });
   }
@@ -80,15 +94,26 @@ const DashboardPage = () => {
     setDialog({
       show: true,
       onContinue: async () => {
-        setDialog({ show: false })
+        setDialog({ show: false });
         try {
           await registrations.put(registration.id, {
             ...registration,
             status: newStatus,
           });
           onSearch(debouncedSearch);
+          setToast({
+            children: "Sucesso!",
+            delay: 500,
+            show: true,
+            variant: "success",
+          });
         } catch (error) {
-          alert(error);
+          setToast({
+            children: "Falha ao atualizar o status: " + error.message,
+            delay: 500,
+            show: true,
+            variant: "error",
+          });
         }
       },
       onDismiss: () => setDialog({ show: false }),
@@ -104,6 +129,8 @@ const DashboardPage = () => {
       <Dialog title="Confirmar ação" {...dialog}>
         <Text>Tem certeza que deseja fazer isso?</Text>
       </Dialog>
+
+      <Toast {...toast} onHide={() => setToast({ ...toast, show: false })} />
 
       <DashboardTemplate
         columns={COLUMNS}
