@@ -1,6 +1,11 @@
 import { HiOutlineArrowLeft } from "react-icons/hi";
 
 import TextField from "@/presentation/molecules/TextField";
+import { validateCpf } from "@/validation/cpf";
+import { validateEmail } from "@/validation/email";
+import { validateFullName } from "@/validation/fullName";
+import { useFormValidation } from "@/validation/hooks/useFormValidation";
+import { maskCpf } from "@/validation/masks/cpf";
 import * as S from "./styles";
 
 type Props = React.ComponentProps<typeof S.Container> & {
@@ -9,6 +14,25 @@ type Props = React.ComponentProps<typeof S.Container> & {
 };
 
 const NewAdmissionTemplate = ({ onBack, onSubmit, ...props }: Props) => {
+  const { errors, onChange, validate } = useFormValidation({
+    employeeName: (value?: string) =>
+      !validateFullName(value) ? "Insira o nome completo" : "",
+    email: (value?: string) =>
+      !validateEmail(value) ? "Insira um email válido" : "",
+    cpf: (value?: string) =>
+      !validateCpf(value) ? "Insira um CPF válido" : "",
+  });
+
+  function onCpfChange(event: React.KeyboardEvent) {
+    maskCpf(event.target as HTMLInputElement);
+    onChange(event);
+  }
+
+  function handleOnSubmit(event: React.FormEvent) {
+    event.preventDefault();
+    if (validate(event.target as HTMLFormElement)) onSubmit(event);
+  }
+
   return (
     <S.Container {...props}>
       <S.Card>
@@ -16,18 +40,32 @@ const NewAdmissionTemplate = ({ onBack, onSubmit, ...props }: Props) => {
           <HiOutlineArrowLeft />
         </S.IconButton>
 
-        <S.Form onSubmit={onSubmit}>
-          <TextField label="Nome" name="name" placeholder="Nome" />
+        <S.Form onSubmit={handleOnSubmit}>
           <TextField
+            error={errors.employeeName}
+            label="Nome"
+            name="employeeName"
+            onChange={onChange}
+            placeholder="Nome"
+          />
+          <TextField
+            error={errors.email}
             label="Email"
             name="email"
+            onChange={onChange}
             placeholder="Email"
             type="email"
           />
-          <TextField label="CPF" name="cpf" placeholder="CPF" />
+          <TextField
+            error={errors.cpf}
+            label="CPF"
+            name="cpf"
+            onChange={onCpfChange}
+            placeholder="CPF"
+          />
           <TextField
             label="Data de admissão"
-            name="dateOfAdmission"
+            name="admissionDate"
             type="date"
           />
 
