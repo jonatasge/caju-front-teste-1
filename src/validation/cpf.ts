@@ -1,4 +1,6 @@
-export function validateCpf(value: string) {
+export function validateCpf(value?: string) {
+  if (value === undefined) return false;
+  
   const cpf = value.replace(/\D/g, "");
 
   if (cpf.length !== 11) return false;
