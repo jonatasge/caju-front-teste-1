@@ -36,12 +36,13 @@ const DashboardPage = () => {
   const [dialog, setDialog] = useState<React.ComponentProps<typeof Dialog>>({
     show: false,
   });
-  const [toast, setToast] = useState<React.ComponentProps<typeof Toast>>({
-    show: false,
-  });
   const [data, setData] = useState<Registration[]>([]);
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
+
+  function setToast(toast: React.ComponentProps<typeof Toast>) {
+    setStore({ ...store, toast });
+  }
 
   async function onLoadData() {
     setStore({ ...store, isLoading: true });
@@ -129,8 +130,6 @@ const DashboardPage = () => {
       <Dialog title="Confirmar ação" {...dialog}>
         <Text>Tem certeza que deseja fazer isso?</Text>
       </Dialog>
-
-      <Toast {...toast} onHide={() => setToast({ ...toast, show: false })} />
 
       <DashboardTemplate
         columns={COLUMNS}
