@@ -5,7 +5,7 @@ import * as S from "./styles";
 
 type Props = React.ComponentProps<typeof S.Loading>;
 
-const Loading = ({ show = true, ...props }: Props) => {
+const Loading = ({ show = false, ...props }: Props) => {
   const [isShow, setIsShow] = useState(true);
   const [intervalId, setIntervalId] = useState<any>();
 
