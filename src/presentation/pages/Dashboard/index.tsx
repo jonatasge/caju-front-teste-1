@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 
 import { registrations } from "@/data/Registrations";
 import { Registration, RegistrationStatus } from "@/domain/Registration";
-import { useStore } from "@/presentation/Store";
 import Text from "@/presentation/atoms/Text";
 import useDebounce from "@/presentation/hooks/useDebounce";
+import Toast from "@/presentation/molecules/Toast";
 import Dialog from "@/presentation/organisms/Dialog";
+import routes from "@/presentation/routes";
+import { useStore } from "@/presentation/store";
 import DashboardTemplate from "@/presentation/templates/Dashboard";
 import { Action } from "@/presentation/templates/Dashboard/types";
-import routes from "@/router/routes";
-import Toast from "@/presentation/molecules/Toast";
 
 const COLUMNS = [
   {

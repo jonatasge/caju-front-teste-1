@@ -1,7 +1,7 @@
 import Header from "@/presentation/molecules/Header";
-import Router from "@/router";
+import Router from "@/Router";
 import Loading from "./presentation/molecules/Loading";
-import { useStore } from "./presentation/Store";
+import { useStore } from "./presentation/store";
 
 function App() {
   const { store } = useStore();

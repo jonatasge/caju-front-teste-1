@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
-import routes from "@/router/routes";
-import NewAdmissionTemplate from "@/presentation/templates/NewAdmission";
 import { getFormValues } from "@/presentation/helpers/form";
+import routes from "@/presentation/routes";
+import NewAdmissionTemplate from "@/presentation/templates/NewAdmission";
 
 const NewAdmissionPage = () => {
   const navigate = useNavigate();
